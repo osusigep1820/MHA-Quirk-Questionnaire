@@ -48,7 +48,7 @@
       { id: 'todoroki', name: 'Shoto Todoroki', gender: 'Male', quirk: 'Ice and Fire', alignment: 'Hero', imageUrl: 'Shoto_Todoroki.webp', desc: 'You are calm, cool, and collected. You might seem distant or quiet at first, but you care deeply about your friends and possess incredible raw power.' },
       { id: 'iida', name: 'Tenya Iida (Ingenium)', gender: 'Male', quirk: 'Engine', alignment: 'Hero', imageUrl: 'Tenya_Iida.webp', desc: 'You are a stickler for the rules and a natural born leader! You value discipline, responsibility, and keeping your friends on the right path.' },
       { id: 'kirishima', name: 'Eijiro Kirishima (Red Riot)', gender: 'Male', quirk: 'Hardening', alignment: 'Hero', imageUrl: 'Eijiro_Kirishima.webp',desc: 'You are the ultimate bro! Chivalrous, brave, and straightforward, you charge headfirst into danger to protect your friends and be as manly as possible.' },
-      { id: 'hawks', name: 'Keigo Takami (Hawks)', gender: 'Male', quirk: 'Fierce Wings', alignment: 'Hero', imageUrl: 'Keigo_Takami.webp', desc: 'You are laid-back and easygoing, but incredibly sharp and observant. You value freedom and want to make the world a place where heroes have too much free time.' },
+      { id: 'hawks', name: 'Keigo Takami (Hawks)', gender: 'Male', quirk: 'Fierce Wings', alignment: 'Hero', imageUrl: 'Keigo_Takami.jpg', desc: 'You are laid-back and easygoing, but incredibly sharp and observant. You value freedom and want to make the world a place where heroes have too much free time.' },
       { id: 'tokoyami', name: 'Fumikage Tokoyami (Tsukuyomi)', gender: 'Male', quirk: 'Dark Shadow', alignment: 'Hero', imageUrl: 'Fumikage_Tokoyami.webp', desc: 'You have a bit of a dark and poetic soul. You are calm, focused, and thrive in the shadows, always keeping your cool even when things get intense.' },
       
       // MALE VILLAINS
@@ -62,8 +62,8 @@
       { id: 'yaoyorozu', name: 'Momo Yaoyorozu (Creation)', gender: 'Female', quirk: 'Creation', alignment: 'Hero', imageUrl: 'Momo_Yaoyorozu.webp', desc: 'You are brilliant, elegant, and a natural strategic planner! You prefer to rely on your high intellect and preparation rather than just running in with brute force.' },
       { id: 'jiro', name: 'Kyoka Jiro (Earphone Jack)', gender: 'Female', quirk: 'Earphone Jack', alignment: 'Hero', imageUrl: 'Kyoka_Jiro.webp', desc: 'You have a cool, punk-rock vibe. You might seem a bit cynical or quiet on the outside, but you are very perceptive and deeply care for your friends.' },
       { id: 'ashido', name: 'Mina Ashido (Pinky)', gender: 'Female', quirk: 'Acid', alignment: 'Hero', imageUrl: 'Mina_Ashido.webp', desc: 'You are energetic, athletic, and the life of the party! You love dancing, hanging out, and bringing high energy and optimism to any situation.' },
-      { id: 'mirko', name: 'Rumi Usagiyama (Mirko)', gender: 'Female', quirk: 'Rabbit', alignment: 'Hero', imageUrl: 'rumi_usagiyama.webp', desc: 'You are fiercely independent, aggressive in battle, and love a good fight! You speak your mind, trust your instincts, and never back down from a challenge.' },
-      { id: 'nejire', name: 'Nejire Hado (Nejire Chan)', gender: 'Female', quirk: 'Wave Motion', alignment: 'Hero', imageUrl: 'Nejire.webp', desc: 'You are endlessly curious, upbeat, and full of energy! You love learning new things about people and using your overwhelming power to protect them.' },
+      { id: 'mirko', name: 'Rumi Usagiyama (Mirko)', gender: 'Female', quirk: 'Rabbit', alignment: 'Hero', imageUrl: 'rumi_usagiyama.jpg', desc: 'You are fiercely independent, aggressive in battle, and love a good fight! You speak your mind, trust your instincts, and never back down from a challenge.' },
+      { id: 'nejire', name: 'Nejire Hado (Nejire Chan)', gender: 'Female', quirk: 'Wave Motion', alignment: 'Hero', imageUrl: 'Nejire.jpg', desc: 'You are endlessly curious, upbeat, and full of energy! You love learning new things about people and using your overwhelming power to protect them.' },
 
       // FEMALE VILLAINS
       { id: 'toga', name: 'Himiko Toga', gender: 'Female', quirk: 'Transform', alignment: 'Villain', imageUrl: 'Himiko_Toga.webp', desc: 'Villain Alert! You have a very... unique way of showing affection. You are chaotic, unpredictable, and believe in living life exactly how you want, regardless of the rules!' },
@@ -76,17 +76,17 @@
       {
         text: "You see someone being bullied in the street. What do you do?",
         answers: [
-          { text: "Jump in immediately to save them, even without a plan!", points: ['midoriya', 'kirishima', 'uraraka', 'nejire'] },
+          { text: "Jump in immediately to save them, even without a plan!", points: ['midoriya', 'kirishima', 'uraraka', 'nejire', 'asui'] },
           { text: "Blast the bully away to show them who's boss!", points: ['bakugo', 'ashido', 'dabi', 'mirko', 'toga'] },
-          { text: "Assess the situation, make a plan, and call for backup if needed.", points: ['iida', 'yaoyorozu', 'todoroki', 'asui', 'tokoyami', 'hawks'] },
-          { text: "Watch closely. People need to learn to defend themselves.", points: ['shigaraki', 'overhaul', 'nagant', 'jiro', 'labrava'] }
+          { text: "Assess the situation, make a plan, and call for backup if needed.", points: ['iida', 'yaoyorozu', 'todoroki', 'tokoyami', 'hawks', 'nagant'] },
+          { text: "Watch closely. People need to learn to defend themselves.", points: ['shigaraki', 'overhaul', 'jiro', 'labrava'] }
         ]
       },
       {
         text: "What is your primary motivation for using your Quirk?",
         answers: [
           { text: "To save people and bring smiles to their faces!", points: ['midoriya', 'uraraka', 'asui', 'nejire'] },
-          { text: "To be the absolute best and never lose a fight!", points: ['bakugo', 'todoroki', 'mirko'] },
+          { text: "To be the absolute best and never lose a fight!", points: ['bakugo', 'todoroki', 'mirko', 'shigaraki'] },
           { text: "To support my friends and protect those I care about.", points: ['kirishima', 'yaoyorozu', 'jiro', 'ashido', 'tokoyami', 'hawks', 'labrava'] },
           { text: "To tear down the rules and do whatever I want.", points: ['shigaraki', 'toga', 'dabi', 'overhaul', 'nagant'] }
         ]
@@ -96,7 +96,7 @@
         answers: [
           { text: "Overwhelming, head-on explosive power!", points: ['bakugo', 'kirishima', 'ashido', 'todoroki', 'mirko', 'nejire'] },
           { text: "Tactical analysis and creating the right tools for the job.", points: ['midoriya', 'yaoyorozu', 'overhaul', 'labrava'] },
-          { text: "High speed and mobility to outmaneuver the opponent.", points: ['iida', 'asui', 'nagant', 'hawks'] },
+          { text: "High speed and mobility to outmaneuver the opponent.", points: ['iida', 'asui', 'nagant', 'hawks', 'uraraka'] },
           { text: "Unpredictable chaos, stealth, and psychological tricks.", points: ['toga', 'dabi', 'jiro', 'shigaraki', 'tokoyami'] }
         ]
       },
@@ -112,7 +112,7 @@
       {
         text: "If you had a day off from hero (or villain) work, what would you do?",
         answers: [
-          { text: "Train! There is always room for improvement.", points: ['midoriya', 'bakugo', 'iida', 'mirko'] },
+          { text: "Train! There is always room for improvement.", points: ['midoriya', 'bakugo', 'iida', 'mirko', 'todoroki'] },
           { text: "Hang out with friends, go shopping, or grab some food.", points: ['uraraka', 'ashido', 'kirishima', 'asui', 'nejire'] },
           { text: "Read a good book or listen to music alone in my room.", points: ['todoroki', 'yaoyorozu', 'jiro', 'tokoyami'] },
           { text: "Plot my next big move in the shadows.", points: ['shigaraki', 'dabi', 'overhaul', 'toga', 'nagant', 'hawks', 'labrava'] }
@@ -122,7 +122,7 @@
         text: "How do you feel about working in a team?",
         answers: [
           { text: "I prefer to work alone so no one holds me back.", points: ['bakugo', 'todoroki', 'dabi', 'mirko', 'nagant'] },
-          { text: "I love it! I want to support everyone and combo our moves.", points: ['uraraka', 'ashido', 'midoriya', 'nejire', 'labrava'] },
+          { text: "I love it! I want to support everyone and combo our moves.", points: ['uraraka', 'ashido', 'midoriya', 'nejire', 'labrava', 'kirishima'] },
           { text: "I'll work in a team if I'm the one in charge or making the plans.", points: ['iida', 'yaoyorozu', 'shigaraki', 'overhaul'] },
           { text: "I'm fine with it, but I prefer to stay in the background and do my specific job.", points: ['tokoyami', 'asui', 'jiro', 'hawks', 'toga'] }
         ]
@@ -130,10 +130,10 @@
       {
         text: "What is your approach to society's rules?",
         answers: [
-          { text: "Rules are there to protect us. I follow them strictly.", points: ['iida', 'yaoyorozu', 'asui'] },
-          { text: "I'll bend the rules if it's the only way to save someone.", points: ['midoriya', 'kirishima', 'hawks', 'nejire'] },
+          { text: "Rules are there to protect us. I follow them strictly.", points: ['iida', 'yaoyorozu', 'asui', 'overhaul'] },
+          { text: "I'll bend the rules if it's the only way to save someone.", points: ['midoriya', 'kirishima', 'hawks', 'nejire', 'uraraka'] },
           { text: "Rules just restrict my true potential.", points: ['bakugo', 'mirko', 'toga', 'ashido'] },
-          { text: "The rules are flawed, and society needs to be dismantled.", points: ['shigaraki', 'dabi', 'overhaul', 'nagant', 'labrava', 'tokoyami'] }
+          { text: "The rules are flawed, and society needs to be dismantled.", points: ['shigaraki', 'dabi', 'nagant', 'labrava', 'tokoyami', 'jiro'] }
         ]
       },
       {
