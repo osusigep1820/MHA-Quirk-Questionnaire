@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MHA Quirk Discovery Test</title>
+  
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React and ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel to compile JSX in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Custom animation for the result screen */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-blue-50">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // --- ICONS ---
+    // Since we aren't using a package manager, we create inline SVG icons here
+    const Shield = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
+    const Skull = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M8 20v2h8v-2"/><path d="m12.5 17-.5-1-.5 1h1z"/><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"/></svg>;
+    const Zap = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+    const ArrowRight = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
+    const RefreshCcw = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></svg>;
+    const UserIcon = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+
+    // --- CHARACTER DATABASE ---
+    const characters = [
+      // MALE HEROES
+      { id: 'midoriya', name: 'Izuku Midoriya (Deku)', gender: 'Male', quirk: 'One For All', alignment: 'Hero', imageUrl: 'https://placehold.co/800x800/22c55e/white?text=Deku+Image', desc: 'You have a pure heart and a strong desire to save others! You might overthink things, but when push comes to shove, your body moves on its own to help those in need.' },
+      { id: 'bakugo', name: 'Katsuki Bakugo (Dynamight)', gender: 'Male', quirk: 'Explosion', alignment: 'Hero', imageUrl: 'https://placehold.co/800x800/f97316/white?text=Bakugo+Image', desc: 'You are fiercely competitive and demand perfection! You can be a bit fiery and aggressive, but your drive to win and be the absolute best hero is unmatched.' },
+      { id: 'todoroki', name: 'Shoto Todoroki', gender: 'Male', quirk: 'Ice and Fire', alignment: 'Hero', desc: 'You are calm, cool, and collected. You might seem distant or quiet at first, but you care deeply about your friends and possess incredible raw power.' },
+      { id: 'iida', name: 'Tenya Iida (Ingenium)', gender: 'Male', quirk: 'Engine', alignment: 'Hero', desc: 'You are a stickler for the rules and a natural born leader! You value discipline, responsibility, and keeping your friends on the right path.' },
+      { id: 'kirishima', name: 'Eijiro Kirishima (Red Riot)', gender: 'Male', quirk: 'Hardening', alignment: 'Hero', desc: 'You are the ultimate bro! Chivalrous, brave, and straightforward, you charge headfirst into danger to protect your friends and be as manly as possible.' },
+      { id: 'hawks', name: 'Keigo Takami (Hawks)', gender: 'Male', quirk: 'Fierce Wings', alignment: 'Hero', desc: 'You are laid-back and easygoing, but incredibly sharp and observant. You value freedom and want to make the world a place where heroes have too much free time.' },
+      { id: 'tokoyami', name: 'Fumikage Tokoyami (Tsukuyomi)', gender: 'Male', quirk: 'Dark Shadow', alignment: 'Hero', desc: 'You have a bit of a dark and poetic soul. You are calm, focused, and thrive in the shadows, always keeping your cool even when things get intense.' },
+      
+      // MALE VILLAINS
+      { id: 'shigaraki', name: 'Tomura Shigaraki', gender: 'Male', quirk: 'Decay', alignment: 'Villain', desc: 'Villain Alert! You harbor a lot of resentment towards the rules. You are a destructive force looking to tear down society and rebuild it exactly the way you want it.' },
+      { id: 'dabi', name: 'Dabi', gender: 'Male', quirk: 'Blueflame', alignment: 'Villain', desc: 'Villain Alert! You are aloof, mysterious, and have a flair for the dramatic. You prefer to watch the world burn from the sidelines before making your grand entrance.' },
+      { id: 'overhaul', name: 'Kai Chisaki (Overhaul)', gender: 'Male', quirk: 'Overhaul', alignment: 'Villain', desc: 'Villain Alert! You are a calculating perfectionist who hates messes. You view most people as pawns in your grand, intricate plans for the future.' },
+
+      // FEMALE HEROES
+      { id: 'uraraka', name: 'Ochaco Uraraka (Uravity)', gender: 'Female', quirk: 'Zero Gravity', alignment: 'Hero', desc: 'You are bubbly, empathetic, and extremely hardworking! You always try to look on the bright side and do whatever it takes to support those around you.' },
+      { id: 'asui', name: 'Tsuyu Asui (Froppy)', gender: 'Female', quirk: 'Frog', alignment: 'Hero', desc: 'Ribbit! You are blunt, honest, and remarkably level-headed in a crisis. People can always rely on you to keep a cool head when things get crazy.' },
+      { id: 'yaoyorozu', name: 'Momo Yaoyorozu (Creation)', gender: 'Female', quirk: 'Creation', alignment: 'Hero', desc: 'You are brilliant, elegant, and a natural strategic planner! You prefer to rely on your high intellect and preparation rather than just running in with brute force.' },
+      { id: 'jiro', name: 'Kyoka Jiro (Earphone Jack)', gender: 'Female', quirk: 'Earphone Jack', alignment: 'Hero', desc: 'You have a cool, punk-rock vibe. You might seem a bit cynical or quiet on the outside, but you are very perceptive and deeply care for your friends.' },
+      { id: 'ashido', name: 'Mina Ashido (Pinky)', gender: 'Female', quirk: 'Acid', alignment: 'Hero', desc: 'You are energetic, athletic, and the life of the party! You love dancing, hanging out, and bringing high energy and optimism to any situation.' },
+      { id: 'mirko', name: 'Rumi Usagiyama (Mirko)', gender: 'Female', quirk: 'Rabbit', alignment: 'Hero', desc: 'You are fiercely independent, aggressive in battle, and love a good fight! You speak your mind, trust your instincts, and never back down from a challenge.' },
+      { id: 'nejire', name: 'Nejire Hado (Nejire Chan)', gender: 'Female', quirk: 'Wave Motion', alignment: 'Hero', desc: 'You are endlessly curious, upbeat, and full of energy! You love learning new things about people and using your overwhelming power to protect them.' },
+
+      // FEMALE VILLAINS
+      { id: 'toga', name: 'Himiko Toga', gender: 'Female', quirk: 'Transform', alignment: 'Villain', desc: 'Villain Alert! You have a very... unique way of showing affection. You are chaotic, unpredictable, and believe in living life exactly how you want, regardless of the rules!' },
+      { id: 'nagant', name: 'Lady Nagant', gender: 'Female', quirk: 'Rifle', alignment: 'Villain', desc: 'Villain Alert! You are highly pragmatic and trust your own judgment above all else. You operate well in the shadows and don\'t buy into the "fake" hero hype.' },
+      { id: 'labrava', name: 'Manami Aiba (La Brava)', gender: 'Female', quirk: 'Love', alignment: 'Villain', desc: 'Villain Alert! You are deeply devoted to the ones you love and will do anything to support their goals, often using your incredible tech skills from behind the scenes.' }
+    ];
+
+    // --- QUESTION LIST ---
+    const questions = [
+      {
+        text: "You see someone being bullied in the street. What do you do?",
+        answers: [
+          { text: "Jump in immediately to save them, even without a plan!", points: ['midoriya', 'kirishima', 'uraraka', 'nejire'] },
+          { text: "Blast the bully away to show them who's boss!", points: ['bakugo', 'ashido', 'dabi', 'mirko', 'toga'] },
+          { text: "Assess the situation, make a plan, and call for backup if needed.", points: ['iida', 'yaoyorozu', 'todoroki', 'asui', 'tokoyami', 'hawks'] },
+          { text: "Watch closely. People need to learn to defend themselves.", points: ['shigaraki', 'overhaul', 'nagant', 'jiro', 'labrava'] }
+        ]
+      },
+      {
+        text: "What is your primary motivation for using your Quirk?",
+        answers: [
+          { text: "To save people and bring smiles to their faces!", points: ['midoriya', 'uraraka', 'asui', 'nejire'] },
+          { text: "To be the absolute best and never lose a fight!", points: ['bakugo', 'todoroki', 'mirko'] },
+          { text: "To support my friends and protect those I care about.", points: ['kirishima', 'yaoyorozu', 'jiro', 'ashido', 'tokoyami', 'hawks', 'labrava'] },
+          { text: "To tear down the rules and do whatever I want.", points: ['shigaraki', 'toga', 'dabi', 'overhaul', 'nagant'] }
+        ]
+      },
+      {
+        text: "What is your ideal battle style?",
+        answers: [
+          { text: "Overwhelming, head-on explosive power!", points: ['bakugo', 'kirishima', 'ashido', 'todoroki', 'mirko', 'nejire'] },
+          { text: "Tactical analysis and creating the right tools for the job.", points: ['midoriya', 'yaoyorozu', 'overhaul', 'labrava'] },
+          { text: "High speed and mobility to outmaneuver the opponent.", points: ['iida', 'asui', 'nagant', 'hawks'] },
+          { text: "Unpredictable chaos, stealth, and psychological tricks.", points: ['toga', 'dabi', 'jiro', 'shigaraki', 'tokoyami'] }
+        ]
+      },
+      {
+        text: "How do you handle a major failure or setback?",
+        answers: [
+          { text: "I might cry a little, but then I work ten times harder!", points: ['midoriya', 'uraraka', 'nejire', 'labrava'] },
+          { text: "I get furious and vow to absolutely never lose again!", points: ['bakugo', 'shigaraki', 'dabi', 'mirko'] },
+          { text: "I coldly analyze what went wrong and adjust my strategy.", points: ['yaoyorozu', 'iida', 'overhaul', 'todoroki', 'nagant', 'hawks', 'tokoyami'] },
+          { text: "Failure? I just laugh it off and try a different crazy approach.", points: ['toga', 'ashido', 'asui', 'jiro'] }
+        ]
+      },
+      {
+        text: "If you had a day off from hero (or villain) work, what would you do?",
+        answers: [
+          { text: "Train! There is always room for improvement.", points: ['midoriya', 'bakugo', 'iida', 'mirko'] },
+          { text: "Hang out with friends, go shopping, or grab some food.", points: ['uraraka', 'ashido', 'kirishima', 'asui', 'nejire'] },
+          { text: "Read a good book or listen to music alone in my room.", points: ['todoroki', 'yaoyorozu', 'jiro', 'tokoyami'] },
+          { text: "Plot my next big move in the shadows.", points: ['shigaraki', 'dabi', 'overhaul', 'toga', 'nagant', 'hawks', 'labrava'] }
+        ]
+      },
+      {
+        text: "How do you feel about working in a team?",
+        answers: [
+          { text: "I prefer to work alone so no one holds me back.", points: ['bakugo', 'todoroki', 'dabi', 'mirko', 'nagant'] },
+          { text: "I love it! I want to support everyone and combo our moves.", points: ['uraraka', 'ashido', 'midoriya', 'nejire', 'labrava'] },
+          { text: "I'll work in a team if I'm the one in charge or making the plans.", points: ['iida', 'yaoyorozu', 'shigaraki', 'overhaul'] },
+          { text: "I'm fine with it, but I prefer to stay in the background and do my specific job.", points: ['tokoyami', 'asui', 'jiro', 'hawks', 'toga'] }
+        ]
+      },
+      {
+        text: "What is your approach to society's rules?",
+        answers: [
+          { text: "Rules are there to protect us. I follow them strictly.", points: ['iida', 'yaoyorozu', 'asui'] },
+          { text: "I'll bend the rules if it's the only way to save someone.", points: ['midoriya', 'kirishima', 'hawks', 'nejire'] },
+          { text: "Rules just restrict my true potential.", points: ['bakugo', 'mirko', 'toga', 'ashido'] },
+          { text: "The rules are flawed, and society needs to be dismantled.", points: ['shigaraki', 'dabi', 'overhaul', 'nagant', 'labrava', 'tokoyami'] }
+        ]
+      },
+      {
+        text: "What kind of reputation do you want to have?",
+        answers: [
+          { text: "The symbol of peace that everyone looks up to with a smile.", points: ['midoriya', 'uraraka', 'nejire', 'kirishima', 'ashido'] },
+          { text: "The undisputed champion that everyone fears and respects.", points: ['bakugo', 'mirko', 'overhaul', 'shigaraki'] },
+          { text: "A reliable professional who just gets the job done efficiently.", points: ['todoroki', 'iida', 'asui', 'yaoyorozu', 'tokoyami'] },
+          { text: "I don't care about fame. I operate in the shadows.", points: ['hawks', 'jiro', 'dabi', 'toga', 'nagant', 'labrava'] }
+        ]
+      }
+    ];
+
+    function App() {
+      const [stage, setStage] = useState('start');
+      const [gender, setGender] = useState(null);
+      const [currentQuestion, setCurrentQuestion] = useState(0);
+      const [scores, setScores] = useState({});
+      const [result, setResult] = useState(null);
+
+      const handleStart = (selectedGender) => {
+        setGender(selectedGender);
+        const initialScores = {};
+        characters.forEach(char => {
+          initialScores[char.id] = 0;
+        });
+        setScores(initialScores);
+        setStage('quiz');
+        setCurrentQuestion(0);
+      };
+
+      const handleAnswer = (pointsArray) => {
+        const newScores = { ...scores };
+        pointsArray.forEach(charId => {
+          if (newScores[charId] !== undefined) {
+            newScores[charId] += 1;
+          }
+        });
+        setScores(newScores);
+
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1);
+        } else {
+          calculateResult(newScores);
+        }
+      };
+
+      const calculateResult = (finalScores) => {
+        const eligibleCharacters = characters.filter(char => char.gender === gender);
+        let topCharacter = eligibleCharacters[0];
+        let maxScore = -1;
+
+        eligibleCharacters.forEach(char => {
+          if (finalScores[char.id] > maxScore) {
+            maxScore = finalScores[char.id];
+            topCharacter = char;
+          }
+        });
+
+        setResult(topCharacter);
+        setStage('result');
+      };
+
+      const restartQuiz = () => {
+        setStage('start');
+        setGender(null);
+        setResult(null);
+      };
+
+      return (
+        <div className="min-h-screen bg-blue-50 font-sans text-gray-800 selection:bg-yellow-300 pb-12">
+          {/* Decorative Header */}
+          <div className="bg-yellow-400 p-4 border-b-8 border-blue-600 shadow-md">
+            <h1 className="text-4xl md:text-5xl font-black text-center text-blue-800 uppercase tracking-widest" style={{ textShadow: '2px 2px 0px white' }}>
+              Quirk Discovery Test
+            </h1>
+          </div>
+
+          <div className="max-w-3xl mx-auto p-4 md:p-6 mt-8">
+            
+            {/* --- STAGE 1: START & GENDER SELECTION --- */}
+            {stage === 'start' && (
+              <div className="bg-white rounded-2xl shadow-xl border-4 border-gray-900 p-8 text-center transform transition-all hover:-translate-y-1">
+                <Zap className="w-20 h-20 mx-auto text-yellow-500 mb-6" />
+                <h2 className="text-3xl font-bold mb-4">Welcome to U.A. High (or the League of Villains...)!</h2>
+                <p className="text-lg text-gray-600 mb-8">
+                  Before you enter the party, we need to register your Quirk in the official database. 
+                  Answer a few psychological questions to find out which character you are most like!
+                </p>
+                
+                <div className="mb-6 border-t-2 border-dashed border-gray-300 pt-6">
+                  <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-gray-500">First, select your character type:</h3>
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <button 
+                      onClick={() => handleStart('Female')}
+                      className="flex-1 bg-pink-500 hover:bg-pink-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-pink-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
+                    >
+                      <UserIcon className="w-6 h-6" /> Female Character
+                    </button>
+                    <button 
+                      onClick={() => handleStart('Male')}
+                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
+                    >
+                      <UserIcon className="w-6 h-6" /> Male Character
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* --- STAGE 2: QUIZ QUESTIONS --- */}
+            {stage === 'quiz' && (
+              <div className="bg-white rounded-2xl shadow-xl border-4 border-gray-900 overflow-hidden">
+                <div className="bg-gray-200 h-4 w-full">
+                  <div 
+                    className="bg-yellow-400 h-full transition-all duration-500 ease-out"
+                    style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
+                  ></div>
+                </div>
+                
+                <div className="p-6 md:p-8">
+                  <div className="text-sm font-bold text-blue-500 uppercase tracking-widest mb-2">
+                    Question {currentQuestion + 1} of {questions.length}
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 leading-tight">
+                    {questions[currentQuestion].text}
+                  </h2>
+
+                  <div className="space-y-4">
+                    {questions[currentQuestion].answers.map((answer, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleAnswer(answer.points)}
+                        className="w-full text-left bg-gray-50 hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-400 p-4 md:p-5 rounded-xl text-lg font-medium transition-colors flex items-center justify-between group"
+                      >
+                        <span className="pr-4">{answer.text}</span>
+                        <ArrowRight className="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* --- STAGE 3: RESULTS --- */}
+            {stage === 'result' && result && (
+              <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-gray-900 text-white' : 'border-blue-500 bg-white'}`}>
+                
+                {/* Faded Background Image */}
+                <div 
+                  className="absolute inset-0 z-0 bg-cover bg-center opacity-15"
+                  style={{ 
+                    backgroundImage: `url('${result.imageUrl || `https://placehold.co/800x800/9ca3af/ffffff?text=${result.name.replace(/ /g, '+')}`}')` 
+                  }}
+                ></div>
+
+                {/* Banner based on alignment */}
+                <div className={`relative z-10 p-4 text-center ${result.alignment === 'Villain' ? 'bg-red-600 text-white' : 'bg-blue-500 text-white'}`}>
+                  <div className="flex justify-center items-center gap-2">
+                    {result.alignment === 'Villain' ? <Skull className="w-8 h-8 animate-pulse" /> : <Shield className="w-8 h-8" />}
+                    <h2 className="text-xl md:text-2xl font-black uppercase tracking-widest">
+                      {result.alignment === 'Villain' ? 'Villain Identified!' : 'Hero License Approved!'}
+                    </h2>
+                    {result.alignment === 'Villain' ? <Skull className="w-8 h-8 animate-pulse" /> : <Shield className="w-8 h-8" />}
+                  </div>
+                </div>
+
+                <div className="relative z-10 p-6 md:p-12 text-center">
+                  <p className={`text-xl font-bold mb-2 ${result.alignment === 'Villain' ? 'text-gray-400' : 'text-gray-500'}`}>You are...</p>
+                  <h1 className={`text-3xl md:text-5xl font-black mb-6 ${result.alignment === 'Villain' ? 'text-red-400' : 'text-blue-600'}`}>
+                    {result.name}
+                  </h1>
+
+                  <div className={`inline-block rounded-2xl p-4 md:p-6 mb-8 shadow-inner ${result.alignment === 'Villain' ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                    <p className={`text-sm font-bold uppercase tracking-widest mb-1 ${result.alignment === 'Villain' ? 'text-gray-400' : 'text-gray-500'}`}>Your Registered Quirk</p>
+                    <div className="flex items-center justify-center gap-3">
+                      <Zap className={`w-8 h-8 ${result.alignment === 'Villain' ? 'text-purple-600' : 'text-yellow-500'}`} />
+                      <span className={`text-2xl md:text-3xl font-bold ${result.alignment === 'Villain' ? 'text-white' : 'text-gray-900'}`}>{result.quirk}</span>
+                    </div>
+                  </div>
+
+                  <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 ${result.alignment === 'Villain' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {result.desc}
+                  </p>
+
+                  <button 
+                    onClick={restartQuiz}
+                    className={`mx-auto flex items-center justify-center gap-2 font-bold text-lg py-4 px-8 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95
+                      ${result.alignment === 'Villain' 
+                        ? 'bg-red-600 hover:bg-red-500 text-white' 
+                        : 'bg-yellow-400 hover:bg-yellow-300 text-gray-900'}`}
+                  >
+                    <RefreshCcw className="w-5 h-5" /> Take Test Again
+                  </button>
+                </div>
+              </div>
+            )}
+            
+          </div>
+        </div>
+      );
+    }
+
+    // Render the App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
