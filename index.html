@@ -33,7 +33,6 @@
     const { useState } = React;
 
     // --- ICONS ---
-    // Since we aren't using a package manager, we create inline SVG icons here
     const Shield = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
     const Skull = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M8 20v2h8v-2"/><path d="m12.5 17-.5-1-.5 1h1z"/><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"/></svg>;
     const Zap = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
@@ -208,8 +207,8 @@
         <div 
           className="min-h-screen font-sans text-gray-800 selection:bg-yellow-300 pb-12 transition-colors duration-500"
           style={{ 
-            backgroundImage: `url('boku-no-hero-academia.png'), url('night-sky-background.avif')`,
-            backgroundPosition: 'center, center',
+            backgroundImage: 'url("boku-no-hero-academia.png"), url("night-sky-background.avif")',
+            backgroundPosition: 'center center, center center',
             backgroundRepeat: 'no-repeat, no-repeat',
             backgroundSize: 'min(90vw, 800px) auto, cover',
             backgroundAttachment: 'fixed, fixed'
@@ -292,9 +291,9 @@
             {stage === 'result' && result && (
               <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-gray-900/90 backdrop-blur-md text-white' : 'border-blue-500 bg-white/90 backdrop-blur-md'}`}>
                 
-                {/* Faded Background Image */}
+                {/* Faded Background Image - Contains fix to prevent cropping */}
                 <div 
-                  className="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat opacity-15"
+                  className="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat opacity-20"
                   style={{ 
                     backgroundImage: `url('${result.imageUrl || `https://placehold.co/800x800/9ca3af/ffffff?text=${result.name.replace(/ /g, '+')}`}')` 
                   }}
@@ -305,7 +304,7 @@
                   <div className="flex justify-center items-center gap-2">
                     {result.alignment === 'Villain' ? <Skull className="w-8 h-8 animate-pulse" /> : <Shield className="w-8 h-8" />}
                     <h2 className="text-xl md:text-2xl font-black uppercase tracking-widest">
-                      {result.alignment === 'Villain' ? 'Villain Identified!' : 'Hero License Approved!'}
+                      {result.alignment === 'Villain' ? 'Villain Identified! : Hero License Denied' : 'Hero License Approved!'}
                     </h2>
                     {result.alignment === 'Villain' ? <Skull className="w-8 h-8 animate-pulse" /> : <Shield className="w-8 h-8" />}
                   </div>
@@ -317,7 +316,7 @@
                     {result.name}
                   </h1>
 
-                  <div className={`inline-block rounded-2xl p-4 md:p-6 mb-8 shadow-inner ${result.alignment === 'Villain' ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                  <div className={`inline-block rounded-2xl p-4 md:p-6 mb-8 shadow-inner ${result.alignment === 'Villain' ? 'bg-gray-800/80' : 'bg-gray-100/80'}`}>
                     <p className={`text-sm font-bold uppercase tracking-widest mb-1 ${result.alignment === 'Villain' ? 'text-gray-400' : 'text-gray-500'}`}>Your Registered Quirk</p>
                     <div className="flex items-center justify-center gap-3">
                       <Zap className={`w-8 h-8 ${result.alignment === 'Villain' ? 'text-purple-600' : 'text-yellow-500'}`} />
@@ -325,7 +324,7 @@
                     </div>
                   </div>
 
-                  <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 ${result.alignment === 'Villain' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 ${result.alignment === 'Villain' ? 'text-gray-300' : 'text-gray-800 font-medium'}`}>
                     {result.desc}
                   </p>
 
