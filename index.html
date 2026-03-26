@@ -208,8 +208,8 @@
           className="min-h-screen font-sans text-gray-800 selection:bg-yellow-300 pb-12 transition-colors duration-500"
           style={{ 
             backgroundImage: 'url("boku-no-hero-academia-removebg-preview.png"), url("night-sky-background.avif")',
-            // Adjusted so the logo is roughly 2 inches (180px) down from the very top!
-            backgroundPosition: 'center 180px, center center',
+            // Adjusted so the logo sits at the bottom center of the page
+            backgroundPosition: 'center bottom, center center',
             backgroundRepeat: 'no-repeat, no-repeat',
             backgroundSize: 'min(90vw, 800px) auto, cover',
             backgroundAttachment: 'fixed, fixed'
@@ -290,7 +290,7 @@
 
             {/* --- STAGE 3: RESULTS --- */}
             {stage === 'result' && result && (
-              <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-gray-900/90 backdrop-blur-md text-white' : 'border-blue-500 bg-white/90 backdrop-blur-md'}`}>
+              <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-white/90 backdrop-blur-md text-gray-900' : 'border-blue-500 bg-white/90 backdrop-blur-md'}`}>
                 
                 {/* Faded Background Image - Contains fix to prevent cropping */}
                 <div 
@@ -312,20 +312,20 @@
                 </div>
 
                 <div className="relative z-10 p-6 md:p-12 text-center">
-                  <p className={`text-xl font-bold mb-2 ${result.alignment === 'Villain' ? 'text-gray-400' : 'text-gray-500'}`}>You are...</p>
-                  <h1 className={`text-3xl md:text-5xl font-black mb-6 ${result.alignment === 'Villain' ? 'text-red-400' : 'text-blue-600'}`}>
+                  <p className="text-xl font-bold mb-2 text-gray-500">You are...</p>
+                  <h1 className={`text-3xl md:text-5xl font-black mb-6 ${result.alignment === 'Villain' ? 'text-red-600' : 'text-blue-600'}`}>
                     {result.name}
                   </h1>
 
-                  <div className={`inline-block rounded-2xl p-4 md:p-6 mb-8 shadow-inner ${result.alignment === 'Villain' ? 'bg-gray-800/80' : 'bg-gray-100/80'}`}>
-                    <p className={`text-sm font-bold uppercase tracking-widest mb-1 ${result.alignment === 'Villain' ? 'text-gray-400' : 'text-gray-500'}`}>Your Registered Quirk</p>
+                  <div className="inline-block rounded-2xl p-4 md:p-6 mb-8 shadow-inner bg-gray-100/80">
+                    <p className="text-sm font-bold uppercase tracking-widest mb-1 text-gray-500">Your Registered Quirk</p>
                     <div className="flex items-center justify-center gap-3">
                       <Zap className={`w-8 h-8 ${result.alignment === 'Villain' ? 'text-purple-600' : 'text-yellow-500'}`} />
-                      <span className={`text-2xl md:text-3xl font-bold ${result.alignment === 'Villain' ? 'text-white' : 'text-gray-900'}`}>{result.quirk}</span>
+                      <span className="text-2xl md:text-3xl font-bold text-gray-900">{result.quirk}</span>
                     </div>
                   </div>
 
-                  <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 ${result.alignment === 'Villain' ? 'text-gray-300' : 'text-gray-800 font-medium'}`}>
+                  <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 text-gray-800 font-medium">
                     {result.desc}
                   </p>
 
