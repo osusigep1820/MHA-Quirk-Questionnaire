@@ -49,7 +49,7 @@
       { id: 'todoroki', name: 'Shoto Todoroki', gender: 'Male', quirk: 'Ice and Fire', alignment: 'Hero', imageUrl: 'Shoto_Todoroki.webp', desc: 'You are calm, cool, and collected. You might seem distant or quiet at first, but you care deeply about your friends and possess incredible raw power.' },
       { id: 'iida', name: 'Tenya Iida (Ingenium)', gender: 'Male', quirk: 'Engine', alignment: 'Hero', imageUrl: 'Tenya_Iida.webp', desc: 'You are a stickler for the rules and a natural born leader! You value discipline, responsibility, and keeping your friends on the right path.' },
       { id: 'kirishima', name: 'Eijiro Kirishima (Red Riot)', gender: 'Male', quirk: 'Hardening', alignment: 'Hero', imageUrl: 'Eijiro_Kirishima.webp',desc: 'You are the ultimate bro! Chivalrous, brave, and straightforward, you charge headfirst into danger to protect your friends and be as manly as possible.' },
-      { id: 'hawks', name: 'Keigo Takami (Hawks)', gender: 'Male', quirk: 'Fierce Wings', alignment: 'Hero', imageUrl: 'Keigo_Takami.webp', desc: 'You are laid-back and easygoing, but incredibly sharp and observant. You value freedom and want to make the world a place where heroes have too much free time.' },
+      { id: 'hawks', name: 'Keigo Takami (Hawks)', gender: 'Male', quirk: 'Fierce Wings', alignment: 'Hero', imageUrl: 'Keigo_Takami.jpg', desc: 'You are laid-back and easygoing, but incredibly sharp and observant. You value freedom and want to make the world a place where heroes have too much free time.' },
       { id: 'tokoyami', name: 'Fumikage Tokoyami (Tsukuyomi)', gender: 'Male', quirk: 'Dark Shadow', alignment: 'Hero', imageUrl: 'Fumikage_Tokoyami.webp', desc: 'You have a bit of a dark and poetic soul. You are calm, focused, and thrive in the shadows, always keeping your cool even when things get intense.' },
       
       // MALE VILLAINS
@@ -63,8 +63,8 @@
       { id: 'yaoyorozu', name: 'Momo Yaoyorozu (Creation)', gender: 'Female', quirk: 'Creation', alignment: 'Hero', imageUrl: 'Momo_Yaoyorozu.webp', desc: 'You are brilliant, elegant, and a natural strategic planner! You prefer to rely on your high intellect and preparation rather than just running in with brute force.' },
       { id: 'jiro', name: 'Kyoka Jiro (Earphone Jack)', gender: 'Female', quirk: 'Earphone Jack', alignment: 'Hero', imageUrl: 'Kyoka_Jiro.webp', desc: 'You have a cool, punk-rock vibe. You might seem a bit cynical or quiet on the outside, but you are very perceptive and deeply care for your friends.' },
       { id: 'ashido', name: 'Mina Ashido (Pinky)', gender: 'Female', quirk: 'Acid', alignment: 'Hero', imageUrl: 'Mina_Ashido.webp', desc: 'You are energetic, athletic, and the life of the party! You love dancing, hanging out, and bringing high energy and optimism to any situation.' },
-      { id: 'mirko', name: 'Rumi Usagiyama (Mirko)', gender: 'Female', quirk: 'Rabbit', alignment: 'Hero', imageUrl: 'rumi_usagiyama.png', desc: 'You are fiercely independent, aggressive in battle, and love a good fight! You speak your mind, trust your instincts, and never back down from a challenge.' },
-      { id: 'nejire', name: 'Nejire Hado (Nejire Chan)', gender: 'Female', quirk: 'Wave Motion', alignment: 'Hero', imageUrl: 'Nejire.webp', desc: 'You are endlessly curious, upbeat, and full of energy! You love learning new things about people and using your overwhelming power to protect them.' },
+      { id: 'mirko', name: 'Rumi Usagiyama (Mirko)', gender: 'Female', quirk: 'Rabbit', alignment: 'Hero', imageUrl: 'rumi_usagiyama.jpg', desc: 'You are fiercely independent, aggressive in battle, and love a good fight! You speak your mind, trust your instincts, and never back down from a challenge.' },
+      { id: 'nejire', name: 'Nejire Hado (Nejire Chan)', gender: 'Female', quirk: 'Wave Motion', alignment: 'Hero', imageUrl: 'Nejire.jpg', desc: 'You are endlessly curious, upbeat, and full of energy! You love learning new things about people and using your overwhelming power to protect them.' },
 
       // FEMALE VILLAINS
       { id: 'toga', name: 'Himiko Toga', gender: 'Female', quirk: 'Transform', alignment: 'Villain', imageUrl: 'Himiko_Toga.webp', desc: 'Villain Alert! You have a very... unique way of showing affection. You are chaotic, unpredictable, and believe in living life exactly how you want, regardless of the rules!' },
@@ -205,7 +205,16 @@
       };
 
       return (
-        <div className="min-h-screen bg-blue-50 font-sans text-gray-800 selection:bg-yellow-300 pb-12">
+        <div 
+          className="min-h-screen font-sans text-gray-800 selection:bg-yellow-300 pb-12 transition-colors duration-500"
+          style={{ 
+            backgroundImage: `url('boku-no-hero-academia.png'), url('night-sky-background.avif')`,
+            backgroundPosition: 'center, center',
+            backgroundRepeat: 'no-repeat, no-repeat',
+            backgroundSize: 'min(90vw, 800px) auto, cover',
+            backgroundAttachment: 'fixed, fixed'
+          }}
+        >
           {/* Decorative Header */}
           <div className="bg-yellow-400 p-4 border-b-8 border-blue-600 shadow-md">
             <h1 className="text-4xl md:text-5xl font-black text-center text-blue-800 uppercase tracking-widest" style={{ textShadow: '2px 2px 0px white' }}>
@@ -217,26 +226,26 @@
             
             {/* --- STAGE 1: START & GENDER SELECTION --- */}
             {stage === 'start' && (
-              <div className="bg-white rounded-2xl shadow-xl border-4 border-gray-900 p-8 text-center transform transition-all hover:-translate-y-1">
+              <div className="bg-slate-900/85 backdrop-blur-md rounded-2xl shadow-2xl border-4 border-yellow-400 p-8 text-center transform transition-all hover:-translate-y-1">
                 <Zap className="w-20 h-20 mx-auto text-yellow-500 mb-6" />
-                <h2 className="text-3xl font-bold mb-4">Welcome to U.A. High (or the League of Villains...)!</h2>
-                <p className="text-lg text-gray-600 mb-8">
+                <h2 className="text-3xl font-bold mb-4 text-white">Welcome to U.A. High (or the League of Villains...)!</h2>
+                <p className="text-lg text-gray-200 mb-8 font-medium">
                   Before you enter the party, we need to register your Quirk in the official database. 
                   Answer a few psychological questions to find out which character you are most like!
                 </p>
                 
-                <div className="mb-6 border-t-2 border-dashed border-gray-300 pt-6">
-                  <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-gray-500">First, select your character type:</h3>
+                <div className="mb-6 border-t-2 border-dashed border-gray-600 pt-6">
+                  <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-yellow-400">First, select your character type:</h3>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <button 
                       onClick={() => handleStart('Female')}
-                      className="flex-1 bg-pink-500 hover:bg-pink-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-pink-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 bg-pink-500 hover:bg-pink-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-pink-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 shadow-lg"
                     >
                       <UserIcon className="w-6 h-6" /> Female Character
                     </button>
                     <button 
                       onClick={() => handleStart('Male')}
-                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold text-xl py-4 px-8 rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 shadow-lg"
                     >
                       <UserIcon className="w-6 h-6" /> Male Character
                     </button>
@@ -247,8 +256,8 @@
 
             {/* --- STAGE 2: QUIZ QUESTIONS --- */}
             {stage === 'quiz' && (
-              <div className="bg-white rounded-2xl shadow-xl border-4 border-gray-900 overflow-hidden">
-                <div className="bg-gray-200 h-4 w-full">
+              <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border-4 border-gray-900 overflow-hidden">
+                <div className="bg-gray-200/50 h-4 w-full">
                   <div 
                     className="bg-yellow-400 h-full transition-all duration-500 ease-out"
                     style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
@@ -268,7 +277,7 @@
                       <button
                         key={index}
                         onClick={() => handleAnswer(answer.points)}
-                        className="w-full text-left bg-gray-50 hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-400 p-4 md:p-5 rounded-xl text-lg font-medium transition-colors flex items-center justify-between group"
+                        className="w-full text-left bg-white/60 hover:bg-blue-50/90 border-2 border-gray-200 hover:border-blue-400 p-4 md:p-5 rounded-xl text-lg font-medium transition-colors flex items-center justify-between group"
                       >
                         <span className="pr-4">{answer.text}</span>
                         <ArrowRight className="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500" />
@@ -281,7 +290,7 @@
 
             {/* --- STAGE 3: RESULTS --- */}
             {stage === 'result' && result && (
-              <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-gray-900 text-white' : 'border-blue-500 bg-white'}`}>
+              <div className={`relative rounded-3xl shadow-2xl border-4 overflow-hidden transform transition-all animate-fade-in-up ${result.alignment === 'Villain' ? 'border-red-600 bg-gray-900/90 backdrop-blur-md text-white' : 'border-blue-500 bg-white/90 backdrop-blur-md'}`}>
                 
                 {/* Faded Background Image */}
                 <div 
